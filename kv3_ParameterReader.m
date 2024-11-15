@@ -20,7 +20,7 @@ switch mode
     ax{end+1} = struct('title', 'unit', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Unit');
   case 'load'
     % determine unit
-    switch kv3_safeget(ax, 'xlabel', '')
+    switch safeget(ax, 'xlabel', '')
       case 'Field, G', ax.unit = 'G';
       case 'MagneticField, G', ax.unit = 'G';
       case 'Time, s', ax.unit = 's';
@@ -29,25 +29,25 @@ switch mode
       case 'RF1, MHz', ax.unit = 'Hz';
     end
     
-    switch kv3_safeget(dsc, 'KAZANformat', '')
+    switch safeget(dsc, 'KAZANformat', '')
       
       case 'SPECMANTDMS'
-        ax.title = kv3_safeget(dsc, 'name', '');
-        device = kv3_safeget(dsc, 'devices_BRIDGE', []);
-        ax.freq1 = kv3_getvalue(kv3_safeget(device, 'Frequency', '0.0'));
-        sample_info = kv3_safeget(dsc, 'sample_info', '');
-        ax.sample = kv3_safeget(sample_info, 'sample_info', '');
+        ax.title = safeget(dsc, 'name', '');
+        device = safeget(dsc, 'devices_BRIDGE', []);
+        ax.freq1 = kvgetvalue(safeget(device, 'Frequency', '0.0'));
+        sample_info = safeget(dsc, 'sample_info', '');
+        ax.sample = safeget(sample_info, 'sample_info', '');
         
       case 'SPECMAND01'
         if isfield(dsc,'general_freq1')
-          ax.freq1 = kv3_getvalue(dsc.general_freq1);
+          ax.freq1 = kvgetvalue(dsc.general_freq1);
         end
-        ax.title = kv3_safeget(dsc, 'general_name', '');
-        ax.sample = kv3_safeget(dsc, 'sample_info_sample_info_0', '');
-        ax.comment = kv3_safeget(dsc, 'sample_info_sample_info_1', '');
+        ax.title = safeget(dsc, 'general_name', '');
+        ax.sample = safeget(dsc, 'sample_info_sample_info_0', '');
+        ax.comment = safeget(dsc, 'sample_info_sample_info_1', '');
       case 'SPECMANNISTD01'
         if isfield(dsc,'general_freq1')
-          ax.freq1 = kv3_getvalue(dsc.general_freq1);
+          ax.freq1 = kvgetvalue(dsc.general_freq1);
         end
         
       case 'BRUKERDSC'
@@ -68,8 +68,8 @@ switch mode
         else
           ax.title = '?';
         end
-        ax.sample = kv3_safeget(dsc, 'SAMP', '');
-        ax.comment = kv3_safeget(dsc, 'CMNT', '');
+        ax.sample = safeget(dsc, 'SAMP', '');
+        ax.comment = safeget(dsc, 'CMNT', '');
       otherwise
     end
 end
