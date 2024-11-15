@@ -31,13 +31,11 @@ switch mode
       case '*.txt'
         LoadingScript={'ASCII', 'ASCII2D'};
       case {'*.exp'}
-        LoadingScript={'WIS', 'SpecMan'};
+        LoadingScript={'SpecMan'};
       case {'*.par', '*.dsc'}
         LoadingScript={'XEPR', 'XEPR_JSS', 'ASTASHKIN'};
       case '*.rmn'
         LoadingScript={'RMN_1D', 'RMN_2D'};
-      case {'*.d00'}
-        LoadingScript={'WIS'};
       case '*.d01'
         LoadingScript={'SpecMan', 'SpecManNIST'};
       case '*.d02'
@@ -80,8 +78,6 @@ switch mode
         LoadingScript{1} = ['[ax,y,dsc]=brukerreadJSS(''', file_name, ''');'];
       case {'*.datASTASHKIN', '*.parASTASHKIN'}
         LoadingScript{1} = ['[ax,y,dsc]=astashkinread(''', file_name, ''');'];
-      case  {'*.expWIS', '*.d00WIS'}
-        LoadingScript{1} = ['[ax,y,dsc]=d00read(''', file_name, ''');'];
       case  {'*.dattransient'}
         LoadingScript{1} = ['[ax,y,dsc]=ESPtransreadsdsfi(''', file_name, ''');'];
       case  {'*.expSpecMan', '*.d01SpecMan'}
