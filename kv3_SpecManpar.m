@@ -1,4 +1,4 @@
-function res = SpecManpar(par, input_pars)
+function res = kv3_SpecManpar(par, input_pars)
 
 % KAZAN dataviewer with plugins By Boris Epel & Alexey Silakov
 % MPI of Bioinorganic Chemistry, Muelhaim an der Ruhr, 2003
@@ -114,6 +114,7 @@ if isempty(pos)
   tk=istr;
   rstr='';
 else
+  pos = pos(1);
   tk=strtrim(istr(1:pos-1));
   rstr=strtrim(istr(pos+length(tok):end));
 end

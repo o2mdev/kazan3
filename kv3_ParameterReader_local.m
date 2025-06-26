@@ -1,6 +1,6 @@
 % AXstructure = kv3_ParameterReader('load', ax, dsc)
 % ListOfOptions = kv3_ParameterReader('options')
-function ax = kv3_ParameterReader(mode, ax, dsc)
+function ax = kv3_ParameterReader_local(mode, ax, dsc)
 
 % reads fields
 % freq1
@@ -14,7 +14,6 @@ switch mode
     ax{end+1} = struct('title', 'title', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Title');
     ax{end+1} = struct('title', 'sample', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Sample');
     ax{end+1} = struct('title', 'comment', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Comment');
-    ax{end+1} = struct('title', 'formula', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Formula');
     ax{end+1} = struct('title', 'freq1', 'prefix', 'data:', 'value', 0.0, 'type', 'f', 'about', 'EPR frequency');
     ax{end+1} = struct('title', 'reference', 'prefix', 'data:', 'value', 0.0, 'type', 'f', 'about', 'Reference frequency');
     ax{end+1} = struct('title', 'cf', 'prefix', 'data:', 'value', 0.0, 'type', 'f', 'about', 'Central Field');
@@ -46,6 +45,21 @@ switch mode
         ax.title = safeget(dsc, 'general_name', '');
         ax.sample = safeget(dsc, 'sample_info_sample_info_0', '');
         ax.comment = safeget(dsc, 'sample_info_sample_info_1', '');
+
+        % CW experiments
+        switch dsc.general_dconfig
+          case 'JIVA25CW.cfg'
+            sw = kvgetvalue(safeget(dsc, 'LIN_ScanAmplitude', 1));
+            cf = 697 / 1.4 / 2.003 + kvgetvalue(safeget(dsc, 'LIN_ScanOffset', 0));
+            ax.x = cf + linspace(-sw/2, sw/2, length(ax.x));
+            ax.xlabel = 'Field, G';
+          case 'JIVA25RapidScan.cfg'
+            ax.RapidScan_Freq = kvgetvalue(safeget(dsc, 'SCAN_Frequency1', '17.3 kHz'));
+            ax.RapidScan_ScanWidth = kvgetvalue(safeget(dsc, 'SCAN_AmplitudePP1', '1 G'))*1.2;
+            ax.RapidScan_CenterField = 697 / 1.4 / 2.003 + kvgetvalue(safeget(dsc, 'FLD_Field', '0 G'));
+            ax.RapidScan_Sampling = kvgetvalue(safeget(dsc, 'DG_Sampling', '100e-9'));
+        end
+
       case 'SPECMANNISTD01'
         if isfield(dsc,'general_freq1')
           ax.freq1 = kvgetvalue(dsc.general_freq1);
@@ -58,9 +72,6 @@ switch mode
         end
         if isfield(dsc, 'MF')
           ax.freq1 = str2double(dsc.MF);
-        end
-        if isfield(dsc, 'SFOR')
-          ax.formula = dsc.SFOR;
         end
         if isfield(dsc, 'CenterField')
           ax.cf = str2double(stripunit(dsc.CenterField))*1E-4;

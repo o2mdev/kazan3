@@ -8,7 +8,7 @@
 % ax - axis structure
 % y - data
 % dsc - unstructured/file specific information
-function LoadingScript = kv3_ScriptLoad(mode, file_type, file_name, options)
+function LoadingScript = kv3_ScriptLoad_local(mode, file_type, file_name, options)
 
 switch mode
   case 'extension'

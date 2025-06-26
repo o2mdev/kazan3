@@ -63,6 +63,7 @@ for k = 1:size(sweepax, 1)
         end
         % check if this is a parameter
         if isfield(par.params, tempparam)
+            unit = '';
             str = par.params.(tempparam);
             if contains(str,'step')
                 [tk1, str1] = gettoken(str, 'step');
@@ -150,6 +151,7 @@ if isempty(pos)
     tk=istr;
     rstr='';
 else
+    pos = pos(1);
     tk=strtrim(istr(1:pos-1));
     rstr=strtrim(istr(pos+length(tok):end));
 end

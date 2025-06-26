@@ -23,7 +23,7 @@
 % Igor Gromov, ETH-Hoenggerberg, 17.01.03
 % bme,   4-dec-03, MPI  
 
-function varargout=kv_d01read(filename, varargin)
+function varargout=kv3_d01read(filename, varargin)
 
 % convert varargin into structure
 input_pars = [];
@@ -65,8 +65,13 @@ if ndim1 == 0
   error('No data present');
 end
 
-dsc = SpecMandsc(dscname);
-ax = SpecManpar(dsc, input_pars);
+dsc = kv3_SpecMandsc(dscname);
+ax = kv3_SpecManpar(dsc, input_pars);
+
+try
+  ax.raw = reshape(tmpdat, dstrms{1}.dim(1), dstrms{1}.dim(2), ndim1);
+catch
+end
 
 if ndim1 > 1
   if all(dstrms{2}.dim == dstrms{1}.dim)
@@ -89,8 +94,11 @@ else
   spec=reshape(tmpdat,dstrms{1}.dim');
 end
 
-if ~isfield(ax, 'x') || size(ax.x, 1)~=size(spec, 1)
-  ax.x = 1:size(spec, 1);
+x_size = size(spec, 1);
+if ~isfield(ax, 'x') || size(ax.x, 1) < x_size
+  ax.x = 1:x_size;
+else
+  ax.x = ax.x(1:x_size);
 end
 ax.type = 'data';
 
