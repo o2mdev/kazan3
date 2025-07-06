@@ -14,6 +14,7 @@ switch mode
     ax{end+1} = struct('title', 'title', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Title');
     ax{end+1} = struct('title', 'sample', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Sample');
     ax{end+1} = struct('title', 'comment', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Comment');
+    ax{end+1} = struct('title', 'formula', 'prefix', 'data:', 'value', '', 'type', 's', 'about', 'Formula');
     ax{end+1} = struct('title', 'freq1', 'prefix', 'data:', 'value', 0.0, 'type', 'f', 'about', 'EPR frequency');
     ax{end+1} = struct('title', 'reference', 'prefix', 'data:', 'value', 0.0, 'type', 'f', 'about', 'Reference frequency');
     ax{end+1} = struct('title', 'cf', 'prefix', 'data:', 'value', 0.0, 'type', 'f', 'about', 'Central Field');
@@ -57,6 +58,9 @@ switch mode
         end
         if isfield(dsc, 'MF')
           ax.freq1 = str2double(dsc.MF);
+        end
+        if isfield(dsc, 'SFOR')
+          ax.formula = dsc.SFOR;
         end
         if isfield(dsc, 'CenterField')
           ax.cf = str2double(stripunit(dsc.CenterField))*1E-4;

@@ -140,7 +140,7 @@ switch mode
         LoadingScript{2}.Type = 'popupmenu';
         LoadingScript{2}.String = {'Y', 'rY, iY', 'X,Y', 'X,rY,iY', 'idx, X, Y', 'idx, X, rY, iY', 'X,Y1,Y2,Y3..'};
         LoadingScript{2}.Data = {1,2,3,4,5,6,7};
-        LoadingScript{2}.Default = 1;
+        LoadingScript{2}.Default = 3;
         LoadingScript{3}.Type = 'edit';
         LoadingScript{3}.String = {'Time, s'};
       case {'*.RMN_2D','*.rmnRMN_2D'}

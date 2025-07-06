@@ -57,9 +57,9 @@ if ndim1 == 0
   error('No data present');
 end
 
-dsc = SpecMandsc(dscname);
+dsc = kv3_SpecMandsc(dscname);
 dsc.KAZANformat = 'SPECMAND01';
-ax = SpecManpar(dsc, []);
+ax = kv3_SpecManpar(dsc, []);
 
 if ndim1 > 1
   if all(dstrms{2}.dim == dstrms{1}.dim)
