@@ -4,9 +4,6 @@ res = [];
 res = getrespar321(par, res, 'x');
 res = getrespar321(par, res, 'y');
 
-function varargout = stripunit(str)
-varargout{1} = str((str>='0' & str<='9') | str=='.' | str=='E');
-
 function res = getrespar321(par, res, axletter)
 res.(lower(axletter)) = [];
 res.([lower(axletter) 'label']) = '';
@@ -33,7 +30,7 @@ if isfield(par, 'JSS')
     switch str2double(par.JSS)
     case 2
         % CW fiels sweep files 
-        if ~strcmp(upper(axletter), 'Y')
+        if ~strcmpi(axletter, 'Y')
             dim = str2double(kv3_safeget(par,'RES','1024'));
             if isfield(par, 'GST') && isfield(par, 'GSI')
                 sf = str2double(par.GST);
@@ -58,11 +55,10 @@ if isfield(par, 'JSS')
         end
     case 32
         % ESP 380
-        if ~strcmp(upper(axletter), 'Y')
+        if ~strcmpi(axletter, 'Y')
             if isfield(par, [upper(axletter) 'QNT'])
                 dim = str2double(getfield(par, [upper(axletter),'PLS']));
                 idx = getfield(par,[upper(axletter) 'QNT']);
-                idx = idx(idx~=' ');
                 switch idx
                 case 'Time'
                     step = 0;
@@ -123,7 +119,7 @@ if isfield(par, 'JSS')
     % 2D files         
     case {4128,4144}
         dim = str2double(getfield(par, ['SS',upper(axletter)]));        
-        if strcmp(upper(axletter), 'X') && res.complex
+        if strcmpi(axletter, 'X') && res.complex
             dim = dim / 2;
         end
         sw = str2double(kv3_safeget(par, ['X',upper(axletter) 'WI'], num2str(dim)));
@@ -154,7 +150,7 @@ if isfield(par, 'JSS')
     end
     %   no JSS ESP580 format  
 elseif isfield(par, 'JEX')
-    if ~strcmp(upper(axletter), 'Y')
+    if ~strcmpi(axletter, 'Y')
         dim = str2double(kv3_safeget(par,'RES','1024'));
         switch par.JEX
             case 'ENDOR'
@@ -175,7 +171,6 @@ elseif ~strcmp(par.([upper(axletter) 'TYP']), 'NODATA')
     if isfield(par, [upper(axletter) 'AxisQuant'])
         % advance experiment in ESP580
         idx = par.([upper(axletter) 'AxisQuant']);
-        idx = idx(idx~=' ');
         label = [idx, ', ', unit];
     end
 end

@@ -23,7 +23,7 @@ switch mode
     % determine unit
     switch safeget(ax, 'xlabel', '')
       case 'Field, G', ax.unit = 'G';
-      case 'MagneticField, G', ax.unit = 'G';
+      case 'Magnetic Field, G', ax.unit = 'G';
       case 'Time, s', ax.unit = 's';
       case 'a, s', ax.unit = 's';
       case 't90, s', ax.unit = 's';

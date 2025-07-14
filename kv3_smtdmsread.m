@@ -25,6 +25,12 @@ spec = Streams{1} + 1i* Streams{2};
         
 ax = kv3_SpecManTDMSpar(exp);
 
+allstreams = fieldnames(exp.streams);
+ax.raw = [];
+for ii=1:length(allstreams)
+  ax.raw(:,:,ii) = TDMS_StreamToArray(exp.streams.(allstreams{ii}));
+end
+
 if ~isfield(ax, 'x') || size(ax.x, 1)~=size(spec, 1)
   ax.x = 1:size(Streams{1}, 1);
 end

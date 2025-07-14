@@ -94,8 +94,11 @@ else
   spec=reshape(tmpdat,dstrms{1}.dim');
 end
 
-if ~isfield(ax, 'x') || size(ax.x, 1)~=size(spec, 1)
-  ax.x = 1:size(spec, 1);
+x_size = size(spec, 1);
+if ~isfield(ax, 'x') || size(ax.x, 1) < x_size
+  ax.x = 1:x_size;
+else
+  ax.x = ax.x(1:x_size);
 end
 ax.type = 'data';
 
